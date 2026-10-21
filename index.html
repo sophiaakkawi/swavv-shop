@@ -75,7 +75,6 @@
                 </button>
             </div>
 
-            <!-- Formspree direct connector link form pipeline -->
             <form id="cod-checkout-form" onsubmit="handleCheckout(event)" class="flex-grow flex flex-col justify-between overflow-hidden pt-4">
                 <div class="flex-grow overflow-y-auto space-y-6 pr-1">
                     <div>
@@ -86,29 +85,23 @@
                     <div class="space-y-4 border-t border-neutral-800 pt-4">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500">2. Delivery Details</h4>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Full Name *</label>
-                            <input type="text" name="CustomerName" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="John Doe">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-name">Full Name *</label>
+                            <input type="text" id="customer-name" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="John Doe">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Email Address *</label>
-                            <input type="email" name="EmailAddress" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="johndoe@example.com">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-email">Email Address *</label>
+                            <input type="email" id="customer-email" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="johndoe@example.com">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Phone Number *</label>
-                            <input type="tel" name="PhoneNumber" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="+1 (555) 000-0000">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-phone">Phone Number *</label>
+                            <input type="tel" id="customer-phone" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="+1 (555) 000-0000">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Complete Delivery Address *</label>
-                            <textarea name="DeliveryAddress" rows="3" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all resize-none" placeholder="Street name, building, apartment, city"></textarea>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-address">Complete Delivery Address *</label>
+                            <textarea id="customer-address" rows="3" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all resize-none" placeholder="Street name, building, apartment, city"></textarea>
                         </div>
                     </div>
                 </div>
-
-                <!-- Automated dynamic parameters -->
-                <input type="hidden" id="hidden-order-id" name="OrderNumber">
-                <input type="hidden" id="hidden-timestamp" name="Timestamp">
-                <input type="hidden" id="hidden-items" name="Items & Quantity">
-                <input type="hidden" id="hidden-total" name="TotalPrice">
 
                 <div class="border-t border-neutral-800 pt-4 mt-4 space-y-4">
                     <div class="flex justify-between text-sm">
@@ -132,3 +125,11 @@
         const PRODUCTS = [
             { id: 'swv-01', name: 'Cyberpunk Cyber-Hoodie v1.0', price: 125.00, img: 'https://unsplash.com' },
             { id: 'swv-02', name: 'Phantom Oversized Cargo Tech-Pants', price: 140.00, img: 'https://unsplash.com' },
+            { id: 'swv-03', name: 'SWAVV Signature Heavyweight Tee', price: 65.00, img: 'https://unsplash.com' },
+            { id: 'swv-04', name: 'Neon Matrix Structured Beanie', price: 35.00, img: 'https://unsplash.com' }
+        ];
+
+        let cart = [];
+
+        function initStore() {
+            const grid = document.getElementById('product-grid');
