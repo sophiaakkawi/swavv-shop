@@ -1,127 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWAVV | Premium Streetwear</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://jsdelivr.net"></script>
-    <!-- Google Fonts & Lucide Icons -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com"></script>
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .neon-glow { text-shadow: 0 0 10px rgba(0, 255, 204, 0.4); }
-        .neon-border:focus { border-color: #00ffcc; box-shadow: 0 0 10px rgba(0, 255, 204, 0.2); }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00ffcc; }
-    </style>
-</head>
-<body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-[#00ffcc] selection:text-black">
-
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-40 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-900 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-black tracking-widest text-white neon-glow">SWAVV</a>
-            <div class="flex items-center gap-6">
-                <span class="hidden md:inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-[#00ffcc] bg-[#00ffcc]/10 px-3 py-1 rounded-full uppercase border border-[#00ffcc]/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#00ffcc] animate-pulse"></span> Cash on Delivery Only
-                </span>
-                <button onclick="toggleCart()" class="relative p-2 text-neutral-400 hover:text-white transition-colors cursor-pointer">
-                    <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-[#00ffcc] text-neutral-950 text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-12">
-        <div class="mb-12 bg-gradient-to-r from-neutral-900 to-neutral-950 border border-neutral-800 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <h2 class="text-lg font-bold text-white mb-1">Premium Streetwear Store</h2>
-                <p class="text-sm text-neutral-400">Zero online payments. Order now and pay with physical cash right at your doorstep.</p>
-            </div>
-            <div class="flex items-center gap-2 text-sm text-amber-500 font-medium bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/20 w-fit">
-                <i data-lucide="info" class="w-4 h-4"></i> No Cards Needed
-            </div>
-        </div>
-
-        <section>
-            <h2 class="text-xs font-bold tracking-widest uppercase text-neutral-500 mb-8">Drop 001 / New Arrivals</h2>
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-        </section>
-    </main>
-
-    <footer class="bg-neutral-950 border-t border-neutral-900 py-8 px-6 text-center text-xs text-neutral-600">
-        <p>&copy; 2026 SWAVV. All Rights Reserved. Strictly Cash on Delivery Marketplace.</p>
-    </footer>
-
-    <!-- Shopping Cart Overlay Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300 opacity-0 invisible">
-        <div onclick="toggleCart()" class="absolute inset-0 bg-black/80 backdrop-blur-sm pointer-events-auto"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-neutral-900 border-l border-neutral-800 p-6 shadow-2xl flex flex-col pointer-events-auto transform translate-x-full transition-transform duration-300" id="cart-panel">
-            <div class="flex justify-between items-center pb-4 border-b border-neutral-800">
-                <div class="flex items-center gap-2">
-                    <h3 class="text-lg font-bold text-white">Your Order</h3>
-                    <span class="text-xs text-neutral-500 font-mono" id="cart-items-title">(0 items)</span>
-                </div>
-                <button onclick="toggleCart()" class="p-2 text-neutral-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <form id="cod-checkout-form" onsubmit="handleCheckout(event)" class="flex-grow flex flex-col justify-between overflow-hidden pt-4">
-                <div class="flex-grow overflow-y-auto space-y-6 pr-1">
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">1. Review Bag</h4>
-                        <div id="cart-items-container" class="space-y-3"></div>
-                    </div>
-
-                    <div class="space-y-4 border-t border-neutral-800 pt-4">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500">2. Delivery Details</h4>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-name">Full Name *</label>
-                            <input type="text" id="customer-name" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="John Doe">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-email">Email Address *</label>
-                            <input type="email" id="customer-email" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="johndoe@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-phone">Phone Number *</label>
-                            <input type="tel" id="customer-phone" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all" placeholder="+1 (555) 000-0000">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-1.5" for="customer-address">Complete Delivery Address *</label>
-                            <textarea id="customer-address" rows="3" required class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none neon-border transition-all resize-none" placeholder="Street name, building, apartment, city"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-t border-neutral-800 pt-4 mt-4 space-y-4">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-neutral-400">Total Price (COD)</span>
-                        <span class="text-white font-bold text-lg" id="cart-total">$0.00</span>
-                    </div>
-                    <div class="bg-neutral-950 p-3 rounded-xl border border-neutral-800 flex items-start gap-2.5">
-                        <i data-lucide="truck" class="w-4 h-4 text-[#00ffcc] shrink-0 mt-0.5"></i>
-                        <p class="text-[11px] text-neutral-400 leading-normal">You will pay with physical cash upon arrival. No credit cards required.</p>
-                    </div>
-                    <button type="submit" id="submit-order-btn" class="w-full bg-[#00ffcc] hover:bg-[#00e6b8] text-neutral-950 font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,255,204,0.15)] disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span id="btn-text" class="flex items-center gap-2">Confirm Cash Order <i data-lucide="sparkles" class="w-4 h-4"></i></span>
-                        <span id="btn-spinner" class="hidden w-5 h-5 border-2 border-neutral-950 border-t-transparent rounded-full animate-spin"></span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
+<script>
         const PRODUCTS = [
             { id: 'swv-01', name: 'Cyberpunk Cyber-Hoodie v1.0', price: 125.00, img: 'https://unsplash.com' },
             { id: 'swv-02', name: 'Phantom Oversized Cargo Tech-Pants', price: 140.00, img: 'https://unsplash.com' },
@@ -132,4 +9,144 @@
         let cart = [];
 
         function initStore() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = PRODUCTS.map(p => `
+                <div class="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden flex flex-col justify-between group">
+                    <div class="h-48 bg-neutral-800 relative overflow-hidden flex items-center justify-center text-neutral-600 font-mono text-xs">
+                        [ PRODUCT IMAGE ]
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div>
+                            <h3 class="font-bold text-white mb-1 group-hover:text-[#00ffcc] transition-colors">${p.name}</h3>
+                            <p class="text-neutral-400 font-mono text-sm mb-4">$${p.price.toFixed(2)}</p>
+                        </div>
+                        <button onclick="addToCart('${p.id}')" class="w-full bg-neutral-950 border border-neutral-700 hover:border-[#00ffcc] text-white font-bold py-2.5 rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider">
+                            Add to Bag
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-panel');
+            drawer.classList.toggle('opacity-0');
+            drawer.classList.toggle('invisible');
+            panel.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+            toggleCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cart-count');
+            const titleEl = document.getElementById('cart-items-title');
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (totalItems > 0) {
+                countEl.classList.remove('hidden');
+                countEl.textContent = totalItems;
+            } else {
+                countEl.classList.add('hidden');
+            }
+
+            titleEl.textContent = `(${totalItems} items)`;
+            totalEl.textContent = `$${totalPrice.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-xs text-neutral-500 text-center py-8">Your bag is empty.</p>`;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between bg-neutral-950 p-3 rounded-xl border border-neutral-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">${item.name}</h5>
+                        <p class="text-[11px] text-neutral-400">$${item.price.toFixed(2)} x ${item.qty}</p>
+                    </div>
+                    <button type="button" onclick="removeFromCart('${item.id}')" class="text-neutral-500 hover:text-red-400 p-1 cursor-pointer">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        async function handleCheckout(event) {
+            event.preventDefault();
+
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const btn = document.getElementById('submit-order-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnSpinner = document.getElementById('btn-spinner');
+
+            btn.disabled = true;
+            btnText.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            // Format items summary string
+            const itemsSummary = cart.map(item => `${item.name} (x${item.qty})`).join(', ');
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // Pull values directly from the correct input IDs matching your form
+            const orderData = {
+                orderNumber: "SWV-" + Math.floor(100000 + Math.random() * 900000),
+                customerName: document.getElementById('customer-name').value,
+                email: document.getElementById('customer-email').value,
+                phone: document.getElementById('customer-phone').value,
+                address: document.getElementById('customer-address').value,
+                items: itemsSummary,
+                total: "$" + totalPrice.toFixed(2)
+            };
+
+            try {
+                await fetch('https://script.google.com/macros/s/AKfycbzhRi_GyK1v46QcZrRo1bVpBUBE6p1Deqa1M_xqG8bGcJEgVilpeTPWpKx8yusnNVhU/exec', {
+                    method: 'POST',
+                    mode: 'no-cors', // Prevents CORS errors with Google Apps Script
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+
+                alert('Order placed successfully! Cash on delivery confirmed.');
+                cart = [];
+                updateCartUI();
+                document.getElementById('cod-checkout-form').reset();
+                toggleCart();
+            } catch (error) {
+                console.error('Error submitting order:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+            }
+        }
+
+        initStore();
+        lucide.createIcons();
+    </script>
             const grid = document.getElementById('product-grid');
