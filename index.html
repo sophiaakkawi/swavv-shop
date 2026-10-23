@@ -1,8 +1,7 @@
 <script>
 async function sendOrderToGoogleSheets(event) {
-  event.preventDefault(); 
+  if (event) event.preventDefault(); 
 
-  
   const nameField = document.getElementById('name')?.value || document.getElementById('customer-name')?.value || "";
   const emailField = document.getElementById('email')?.value || "";
   const phoneField = document.getElementById('phone')?.value || "";
@@ -12,10 +11,10 @@ async function sendOrderToGoogleSheets(event) {
   const itemsField = document.getElementById('product-grid')?.innerText || "Order Details";
 
   try {
- 
+    // 🚀 CORRECTED: Now hitting your Apps Script Web App instead of the raw spreadsheet link!
     await fetch('https://script.google.com/macros/s/AKfycbzs1iQXQRi7WbTcGzSgzpzZ9fXAvp5kvkGa9vZj2ZUt/dev', {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' }, // Plain text avoids CORS preflight safety errors
+      headers: { 'Content-Type': 'text/plain' }, 
       body: JSON.stringify({
         name: nameField,
         email: emailField,
@@ -36,55 +35,16 @@ async function sendOrderToGoogleSheets(event) {
   }
 }
 </script>
-<script>
 
+<script>
 document.addEventListener("DOMContentLoaded", function() {
- 
   const checkoutForm = document.querySelector('form') || document.getElementById('checkout-form');
   const checkoutBtn = document.querySelector('button[type="submit"]') || document.getElementById('place-order-btn');
 
-  const triggerFunction = async function(event) {
-    if (event) event.preventDefault();
-
-    
-    const nameField = document.getElementById('name')?.value || document.getElementById('customer-name')?.value || "";
-    const emailField = document.getElementById('email')?.value || "";
-    const phoneField = document.getElementById('phone')?.value || "";
-    const addressField = document.getElementById('address')?.value || "";
-    const cityField = document.getElementById('city')?.value || "";
-    const totalField = document.getElementById('cart-total')?.innerText || "0.00";
-    const itemsField = document.getElementById('product-grid')?.innerText || "Order Details";
-
-    try {
-      
-      await fetch('https://script.google.com/macros/s/AKfycbzs1iQXQRi7WbTcGzSgzpzZ9fXAvp5kvkGa9vZj2ZUt/dev', {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({
-          name: nameField,
-          email: emailField,
-          phone: phoneField,
-          address: addressField,
-          city: cityField,
-          country: "Lebanon",
-          total: totalField,
-          items: itemsField
-        })
-      });
-      
-      alert("Thank you! Your order has been placed successfully.");
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to send order data:", error);
-      alert("Unable to process your order. Please check your connection.");
-    }
-  };
-
-  // Attach the listener to whatever exists on your page layout
   if (checkoutForm) {
-    checkoutForm.addEventListener("submit", triggerFunction);
+    checkoutForm.addEventListener("submit", sendOrderToGoogleSheets);
   } else if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", triggerFunction);
+    checkoutBtn.addEventListener("click", sendOrderToGoogleSheets);
   }
 });
 </script>
