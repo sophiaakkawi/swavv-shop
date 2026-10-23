@@ -12,7 +12,7 @@ async function sendOrderToGoogleSheets(event) {
 
   try {
     // 🚀 CORRECTED: Now hitting your Apps Script Web App instead of the raw spreadsheet link!
-    await fetch('https://script.google.com/macros/s/AKfycbzs1iQXQRi7WbTcGzSgzpzZ9fXAvp5kvkGa9vZj2ZUt/dev', {
+    await fetch('https://script.google.com/macros/s/AKfycbzjQwZND-6Aqkt8K-aStrInOZ5FOoczNjIkKrjKW4IGhTtTqbrkSz4u4VzR6al-0rqDvA/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' }, 
       body: JSON.stringify({
