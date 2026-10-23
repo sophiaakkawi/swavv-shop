@@ -13,7 +13,7 @@ async function sendOrderToGoogleSheets(event) {
 
   try {
  
-    await fetch('https://docs.google.com/spreadsheets/d/1eqjtQ9FXH4pmRKy5j1wD_0h2yQ021KL1eg8HPUZJJsU/edit?gid=0#gid=0', {
+    await fetch('https://script.google.com/macros/s/AKfycbzs1iQXQRi7WbTcGzSgzpzZ9fXAvp5kvkGa9vZj2ZUt/dev', {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' }, // Plain text avoids CORS preflight safety errors
       body: JSON.stringify({
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     try {
       
-      await fetch('https://docs.google.com/spreadsheets/d/1eqjtQ9FXH4pmRKy5j1wD_0h2yQ021KL1eg8HPUZJJsU/edit?gid=0#gid=0', {
+      await fetch('https://script.google.com/macros/s/AKfycbzs1iQXQRi7WbTcGzSgzpzZ9fXAvp5kvkGa9vZj2ZUt/dev', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify({
