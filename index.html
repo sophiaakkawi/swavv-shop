@@ -48,3 +48,56 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>
+<script>
+// 🚀 This master script automatically finds and wires up your checkout page elements
+document.addEventListener("DOMContentLoaded", function() {
+  // Find any form or place-order button automatically
+  const checkoutForm = document.querySelector('form') || document.getElementById('checkout-form');
+  const checkoutBtn = document.querySelector('button[type="submit"]') || document.getElementById('place-order-btn');
+
+  const triggerFunction = async function(event) {
+    if (event) event.preventDefault();
+
+    // 1. Grabs the typed values from your checkout input box IDs
+    const nameField = document.getElementById('name')?.value || document.getElementById('customer-name')?.value || "";
+    const emailField = document.getElementById('email')?.value || "";
+    const phoneField = document.getElementById('phone')?.value || "";
+    const addressField = document.getElementById('address')?.value || "";
+    const cityField = document.getElementById('city')?.value || "";
+    const totalField = document.getElementById('cart-total')?.innerText || "0.00";
+    const itemsField = document.getElementById('product-grid')?.innerText || "Order Details";
+
+    try {
+      // 2. Fires the data straight to your Google Sheet Web App Macro URL
+      await fetch('https://script.google.com/macros/s/AKfycbzjQwZND-6Aqkt8K-aStrInOZ5FOoczNjIkKrjKW4IGhTtTqbrkSz4u4VzR6al-0rqDvA/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          name: nameField,
+          email: emailField,
+          phone: phoneField,
+          address: addressField,
+          city: cityField,
+          country: "Lebanon",
+          total: totalField,
+          items: itemsField
+        })
+      });
+      
+      alert("Thank you! Your order has been placed successfully.");
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to send order data:", error);
+      alert("Unable to process your order. Please check your connection.");
+    }
+  };
+
+  // Attach the listener to whatever exists on your page layout
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", triggerFunction);
+  } else if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", triggerFunction);
+  }
+});
+</script>
+
